@@ -10,7 +10,7 @@ wifi:
 captive_portal:
 
 dashboard_import:
-  package_import_url: github://adonno/tagreader/tagreader.yaml
+  package_import_url: github://leicas/tagreader/tagreader.yaml
 
 improv_serial:
 
@@ -264,7 +264,8 @@ pn532_i2c:
             std::string type = record->get_type();
             size_t hass = payload.find("https://www.home-assistant.io/tag/");
             size_t applemusic = payload.find("https://music.apple.com");
-            size_t spotify = payload.find("https://open.spotify.com");
+            size_t spotifyUrl = payload.find("https://open.spotify.com");
+            size_t spotifyUri = payload.find("spotify:");
             size_t sonos = payload.find("sonos-2://");
 
             if (type == "U" and hass != std::string::npos ) {
@@ -278,8 +279,13 @@ pn532_i2c:
               id(source)="amusic";
               id(url)=payload;
             }
-            else if (type == "U" and spotify != std::string::npos ) {
+            else if (type == "U" and spotifyUrl != std::string::npos ) {
               ESP_LOGD("tagreader", "Found Spotify tag NDEF");
+              id(source)="spotify";
+              id(url)=payload;
+            }
+            else if (type == "U" and spotifyUri != std::string::npos ) {
+              ESP_LOGD("tagreader", "Found Spotify URI tag NDEF");
               id(source)="spotify";
               id(url)=payload;
             }
