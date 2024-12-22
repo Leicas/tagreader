@@ -251,7 +251,7 @@ pn532_i2c:
             blue: 0%
             flash_length: 500ms
     
-    - delay: 0.15s #to fix slow component
+    - delay: 0.2s #to fix slow component
         
     - lambda: |-
         id(source)="";
@@ -290,19 +290,9 @@ pn532_i2c:
               id(url)=payload;
               id(info)=payload.substr(hass + 34);
             }
-            else if (type == "U" and applemusic != std::string::npos ) {
-              ESP_LOGD("tagreader", "Found Apple Music tag NDEF");
-              id(source)="amusic";
-              id(url)=payload;
-            }
             else if (type == "U" and (spotifyUrl != std::string::npos)) {
               ESP_LOGD("tagreader", "Found Spotify tag NDEF");
               id(source)="spotify";
-              id(url)=payload;
-            }
-            else if (type == "U" and sonos != std::string::npos ) {
-              ESP_LOGD("tagreader", "Found Sonos app tag NDEF");
-              id(source)="sonos";
               id(url)=payload;
             }
             else if (type == "U" && (mass_deezer != std::string::npos ||
