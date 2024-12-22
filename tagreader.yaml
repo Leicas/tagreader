@@ -7,7 +7,7 @@ wifi:
     ssid: ${name}
 
 # Enable the captive portal for inital WiFi setup
-captive_portal:
+# captive_portal:
 
 dashboard_import:
   package_import_url: github://leicas/tagreader/tagreader.yaml
@@ -260,6 +260,7 @@ pn532_i2c:
         if (tag.has_ndef_message()) {
           auto message = tag.get_ndef_message();
           auto records = message->get_records();
+          ESP_LOGD("tagreader", "Found %d NDEF records", records.size());
           for (auto &record : records) {
             std::string payload = record->get_payload();
             std::string type = record->get_type();
@@ -404,6 +405,7 @@ rtttl:
 # Configure LED
 light:
 - platform: neopixelbus
+  internal: true
   variant: WS2812
   pin: D8
   num_leds: 1
