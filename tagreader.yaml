@@ -227,6 +227,7 @@ ota:
 i2c:
   scan: False
   frequency: 400kHz
+  timeout: 13ms #to prevent pn532 timeout
 
 globals:
   - id: source
@@ -310,13 +311,6 @@ pn532_i2c:
               ESP_LOGD("tagreader", "Found Music Assistant tag NDEF");
               id(source) = "mass";
               id(url) = payload;
-            }
-            else if (type == "T" ) {
-              ESP_LOGD("tagreader", "Found music info tag NDEF");
-              id(info)=payload;
-            }
-            else if ( id(source)=="" ) {
-              id(source)="uid";
             }
           }
         }
