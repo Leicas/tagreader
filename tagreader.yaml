@@ -261,7 +261,7 @@ pn532_i2c:
         id(info)="";
         if (tag.has_ndef_message()) {
           auto message = tag.get_ndef_message();
-          auto records = message->get_records();
+          const auto &records = message->get_records();
           ESP_LOGD("tagreader", "Found %d NDEF records", records.size());
           for (auto &record : records) {
             std::string payload = record->get_payload();
